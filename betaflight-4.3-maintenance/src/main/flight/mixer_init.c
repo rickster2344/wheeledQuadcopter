@@ -64,6 +64,16 @@ static const motorMixer_t mixerQuadX[] = {
     { 1.0f,  1.0f,  1.0f,  1.0f },          // REAR_L
     { 1.0f,  1.0f, -1.0f, -1.0f },          // FRONT_L
 };
+static const motorMixer_t mixerCar[] = {
+    { 0.0f, 0.0f, 0.0f, 0.0f },
+    { 0.0f, 0.0f, 0.0f, 0.0f },
+    { 0.0f, 0.0f, 0.0f, 0.0f },
+    { 0.0f, 0.0f, 0.0f, 0.0f },
+    { 1.0f, 0.0f, 0.0f, -1.0f }, // rear_r
+    { 1.0f, 0.0f, 0.0f, -1.0f }, // front_r
+    { 1.0f, 0.0f, 0.0f, 1.0f }, // rear_l
+    { 1.0f, 0.0f, 0.0f, 1.0f }, // front_l
+};
 #ifndef USE_QUAD_MIXER_ONLY
 static const motorMixer_t mixerTricopter[] = {
     { 1.0f,  0.0f,  1.333333f,  0.0f },     // REAR
@@ -245,6 +255,7 @@ const mixer_t mixers[] = {
     { 2, true,  NULL },                // MIXER_CUSTOM_AIRPLANE
     { 3, true,  NULL },                // MIXER_CUSTOM_TRI
     { 4, false, mixerQuadX1234 },
+    { 8, false, mixerCar }
 };
 #endif // !USE_QUAD_MIXER_ONLY
 
@@ -351,9 +362,10 @@ static void mixerConfigureOutput(void)
         // load custom mixer into currentMixer
         for (int i = 0; i < MAX_SUPPORTED_MOTORS; i++) {
             // check if done
-            if (customMotorMixer(i)->throttle == 0.0f) {
-                break;
-            }
+            //if (customMotorMixer(i)->throttle == 0.0f) {
+                //break; we are using car and the first 4 prop motors are gonna be disabled
+            //    continue;
+            //}
             mixerRuntime.currentMixer[i] = *customMotorMixer(i);
             mixerRuntime.motorCount++;
         }

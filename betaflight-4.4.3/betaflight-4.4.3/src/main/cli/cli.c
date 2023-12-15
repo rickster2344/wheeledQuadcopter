@@ -1776,18 +1776,18 @@ static void printMotorMix(dumpFlags_t dumpMask, const motorMixer_t *customMotorM
 
 //ind: mixer index (0,1,2)
 // ind2: motor index
-motorMixer_t *getCustomMotorMixerByIndices(uint8_t ind, uint8_t ind2) {
+const motorMixer_t *getCustomMotorMixerByIndices(uint8_t ind, uint8_t ind2) {
     if (ind == 0) return customMotorMixer(ind2);
     else if (ind == 1) return customMotorMixer_1(ind2);
     else if (ind == 2) return customMotorMixer_2(ind2);
-    else return NULL
+    else return NULL;
 }
 
 motorMixer_t *getCustomMotorMixerMutableByIndices(uint8_t ind, uint8_t ind2) {
     if (ind == 0) return customMotorMixerMutable(ind2);
     else if (ind == 1) return customMotorMixer_1Mutable(ind2);
     else if (ind == 2) return customMotorMixer_2Mutable(ind2);
-    else return NULL
+    else return NULL;
 }
 
 static void cliMotorMix(const char *cmdName, char *cmdline)
@@ -1825,7 +1825,7 @@ static void cliMotorMix(const char *cmdName, char *cmdline)
                 }
         }
         ptr = nextArg(cmdline);
-        if (ind != -1 && ptr) {
+        if (ind < 2 && ptr) {
             len = strlen(ptr);
             for (uint32_t i = 0; ; i++) {
                 if (mixerNames[i] == NULL) {
@@ -1833,7 +1833,7 @@ static void cliMotorMix(const char *cmdName, char *cmdline)
                     break;
                 }
                 if (strncasecmp(ptr, mixerNames[i], len) == 0) {
-                    mixerLoadMix(i, getCustomMotorMixerByIndices(ind,i));
+                    mixerLoadMix(i, getCustomMotorMixerMutableByIndices(ind,i));
                     cliPrintLinef("Loaded %s", mixerNames[i]);
                     cliMotorMix(cmdName, "");
                     break;

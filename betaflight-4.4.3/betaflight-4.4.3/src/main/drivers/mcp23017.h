@@ -1,3 +1,4 @@
+#pragma once
 //device
 #define MCP23017_ADDRESS 0x20
 
@@ -25,3 +26,12 @@
 #define MCP23017_INTCAPB 0x11
 #define MCP23017_GPIOB 0x13
 #define MCP23017_OLATB 0x15
+#include "bus.h"
+#include "bus_i2c.h"
+struct expander_s;
+
+typedef struct expander_s {
+    extDevice_t dev;
+} expander_t;
+
+_Bool MCP23017Detect();

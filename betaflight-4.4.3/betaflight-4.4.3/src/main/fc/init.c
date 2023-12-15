@@ -44,6 +44,7 @@
 #include "config/feature.h"
 
 #include "drivers/accgyro/accgyro.h"
+#include "drivers/mcp23017.h"
 #include "drivers/adc.h"
 #include "drivers/bus.h"
 #include "drivers/bus_i2c.h"
@@ -713,6 +714,8 @@ void init(void)
         }
         setArmingDisabled(ARMING_DISABLED_NO_GYRO);
     }
+
+    MCP23017Detect();
 
     systemState |= SYSTEM_STATE_SENSORS_READY;
 

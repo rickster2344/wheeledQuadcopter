@@ -30,7 +30,7 @@ bool hasCustomDefaults(void);
 struct serialPort_s;
 void cliEnter(struct serialPort_s *serialPort);
 bool resetConfigToCustomDefaults(void);
-motorMixer_t *getCustomMotorMixerByIndices(uint8_t ind, uint8_t ind2);
+const motorMixer_t *getCustomMotorMixerByIndices(uint8_t ind, uint8_t ind2);
 motorMixer_t *getCustomMotorMixerMutableByIndices(uint8_t ind, uint8_t ind2);
 
 #ifdef USE_CLI_DEBUG_PRINT

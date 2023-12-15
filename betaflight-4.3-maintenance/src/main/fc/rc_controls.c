@@ -44,6 +44,7 @@
 
 #include "flight/pid.h"
 #include "flight/failsafe.h"
+#include "flight/mixer.h"
 
 #include "io/beeper.h"
 #include "io/usb_cdc_hid.h"
@@ -269,10 +270,14 @@ void processRcStickPositions()
     case THR_LO + YAW_LO + PIT_CE + ROL_LO:
         // ROLL left -> PID profile 1
         changePidProfile(0);
+        mixerConfigMutable()->mixerMode = MIXER_QUADX;
+        mixerInit(mixerConfig()->mixerMode);
         return;
     case THR_LO + YAW_LO + PIT_HI + ROL_CE:
         // PITCH up -> PID profile 2
         changePidProfile(1);
+        mixerConfigMutable()->mixerMode = MIXER_CAR;
+        mixerInit(mixerConfig()->mixerMode);
         return;
     case THR_LO + YAW_LO + PIT_CE + ROL_HI:
         // ROLL right -> PID profile 3
